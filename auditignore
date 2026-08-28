@@ -1,0 +1,2 @@
+# Files that define the security signatures themselves (self-scan exemption)
+scripts/audit_skill.py
