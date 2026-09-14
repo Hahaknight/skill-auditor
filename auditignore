@@ -1,2 +1,6 @@
 # Files that define the security signatures themselves (self-scan exemption)
 scripts/audit_skill.py
+# README documents the signature catalogue in plain prose;
+# tests embed fixture signatures on purpose — neither is shippable skill payload
+README.md
+tests

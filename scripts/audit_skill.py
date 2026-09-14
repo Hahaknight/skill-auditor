@@ -74,7 +74,6 @@ def scan_text_patterns(path, lines, table, check_id):
             pat, why, sev = (item if len(item) == 3 else (*item, CRIT))
             if re.search(pat, line, re.I if why not in ("AWS access key",) else 0):
                 findings.append({"level": sev, "check": check_id, "file": path, "line": i,
-                                 "ebidence_placeholder": None,
                                  "evidence": f"{why}: ...{line.strip()[:100]}"})
     return findings
 
@@ -112,7 +111,10 @@ def main():
         auditignore = [l.strip().replace("\\", "/") for l in open(ai_path, encoding="utf-8", errors="replace") if l.strip() and not l.startswith("#")]
     all_findings, n_files, total_lines, md_refs = [], 0, 0, []
     for dirpath, dirnames, filenames in os.walk(root):
-        dirnames[:] = [d for d in dirnames if d not in (".git", "node_modules", "__pycache__")]
+        dirnames[:] = [d for d in dirnames if d not in
+                       (".git", "node_modules", "__pycache__",
+                        ".pytest_cache", ".mypy_cache", ".ruff_cache",
+                        ".tox", ".venv", "venv")]
         for fn in filenames:
             fp = os.path.join(dirpath, fn)
             n_files += 1

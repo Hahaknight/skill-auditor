@@ -39,7 +39,7 @@ of input, the check is broken — say so instead of filling in boilerplate.
 | Q4 | Referenced files exist (broken links) | Support tickets |
 | Q5 | Declared deps (`metadata.requires.bins`) resolvable | "Doesn't run" refunds |
 | P1 | Provenance: LICENSE/NOTICE/author present | Takedown risk |
-| P2 | Template-filler risk: generic placeholder text density | The #1 refund cause |
+| P2 | Template-filler risk: generic filler text density | The #1 refund cause |
 
 ## Scoring
 - CRITICAL (S1-S5, P1) = auto-fail, fix first

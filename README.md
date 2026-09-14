@@ -1,9 +1,13 @@
 # skill-auditor — Pre-Marketplace QA for Agent Skills
 
+[![CI](https://github.com/Hahaknight/skill-auditor/actions/workflows/ci.yml/badge.svg)](https://github.com/Hahaknight/skill-auditor/actions/workflows/ci.yml)
+[![self-audit: SHIPPABLE](https://img.shields.io/badge/self--audit-98%2F100%20SHIPPABLE-brightgreen)](#测试与验证)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 > 在你把 skill 上架到付费市场（Agensi / Fleece / ClaudeSkills…）之前，
 > 抓出会导致**拒审、退款、账号风险**的问题。证据驱动，拒绝模板话术。
 
-[English](README.en.md) · 简体中文
+简体中文
 
 ## 为什么存在
 
@@ -40,15 +44,21 @@ python skill-auditor/scripts/audit_skill.py --path /path/to/your-skill
 - CRITICAL（S1-S5 命中）= 直接 DO NOT LIST
 - 85+ = SHIPPABLE；70-84 = FIX MINOR；<70 = DO NOT LIST
 
-## 实测证据
+## 测试与验证
 
-三组对照样本全部符合预期（完整输出见 [audit/golden-verification](../audit/golden-verification-skill-auditor.txt)）：
+`tests/` 内置 24 项 pytest 用例：单元级（frontmatter 规则、五类特征的正/负例、大小写敏感性、证据定位）+ 端到端金样本对照：
 
 | 样本 | 分数 | 判定 |
 |---|---|---|
-| 投毒样本（6 类缺陷注入） | 0/100 | DO NOT LIST ✅ |
-| 工业级成熟技能（30 文件/8300 行） | 98/100 | SHIPPABLE ✅ |
-| skill-auditor 自身 | 97/100 | SHIPPABLE ✅ |
+| `tests/fixtures/poisoned-skill`（每类缺陷各埋一处） | 0/100 | DO NOT LIST ✅ |
+| `tests/fixtures/good-skill`（干净技能） | ≥85 | SHIPPABLE ✅ |
+| `tests/fixtures/exempt-skill`（auditignore 豁免语义） | ≥85 | SHIPPABLE ✅ |
+| skill-auditor 自身（CI `self-audit` 任务） | 98/100 | SHIPPABLE ✅ |
+
+```bash
+pip install pytest && pytest tests/ -v      # 测试套件
+python scripts/audit_skill.py --path .      # 自审计（CI 每次运行强制 SHIPPABLE）
+```
 
 ## 已知边界
 
