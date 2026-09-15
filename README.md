@@ -55,6 +55,8 @@ python skill-auditor/scripts/audit_skill.py --path /path/to/your-skill
 | `tests/fixtures/exempt-skill`（auditignore 豁免语义） | ≥85 | SHIPPABLE ✅ |
 | skill-auditor 自身（CI `self-audit` 任务） | 98/100 | SHIPPABLE ✅ |
 
+**实战案例**：[audit/case-digital-employee-pack.md](audit/case-digital-employee-pack.md) —— 对真实技能包 digital-employee-pack 的首扫→修复→复扫全记录（97/95/95 → 98/98/98，发现缺 LICENSE 与 XXX 占位符两类真实问题）。
+
 ```bash
 pip install pytest && pytest tests/ -v      # 测试套件
 python scripts/audit_skill.py --path .      # 自审计（CI 每次运行强制 SHIPPABLE）
